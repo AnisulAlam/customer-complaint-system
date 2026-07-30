@@ -9,6 +9,8 @@ import {
   setComplaintFromAI,
   updateComplaint,
   setLoading,
+  setRecentlyEdited,
+  clearRecentlyEdited,
 } from "../../redux/complaintSlice";
 
 function ChatBox() {
@@ -71,7 +73,23 @@ function ChatBox() {
           }
         );
 
+        const oldComplaint = complaint;
+
         dispatch(updateComplaint(response.data));
+
+        const changedFields = [];
+
+        for (const key in response.data) {
+            if (response.data[key] !== oldComplaint[key]) {
+                changedFields.push(key);
+            }
+        }
+
+        dispatch(setRecentlyEdited(changedFields));
+
+        setTimeout(() => {
+            dispatch(clearRecentlyEdited());
+        }, 3000);
 
         aiText = "Complaint updated successfully.";
       } else {

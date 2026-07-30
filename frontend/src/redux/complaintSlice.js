@@ -23,6 +23,7 @@ const initialState = {
     missingInformation: "",
   },
 
+  recentlyEdited: [],
   loading: false,
 };
 
@@ -74,6 +75,15 @@ const complaintSlice = createSlice({
     setLoading(state, action) {
       state.loading = action.payload;
     },
+
+    setRecentlyEdited: (state, action) => {
+        state.recentlyEdited = action.payload;
+    },
+
+    clearRecentlyEdited: (state) => {
+        state.recentlyEdited = [];
+    },
+
   },
 });
 
@@ -82,6 +92,8 @@ export const {
   setComplaintFromAI,
   resetComplaint,
   setLoading,
+  setRecentlyEdited,
+  clearRecentlyEdited,
 } = complaintSlice.actions;
 
 export default complaintSlice.reducer;

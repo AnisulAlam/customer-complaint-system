@@ -8,6 +8,10 @@ function FormField({ label, name, type }) {
     (state) => state.complaint.complaint
   );
 
+  const recentlyEdited = useSelector(
+    (state) => state.complaint.recentlyEdited || []
+  );
+
   const handleChange = (e) => {
     dispatch(
       updateComplaint({
@@ -16,9 +20,13 @@ function FormField({ label, name, type }) {
     );
   };
 
+  const highlightClass = recentlyEdited.includes(name)
+    ? "highlight-field"
+    : "";
+
   if (type === "textarea") {
     return (
-      <div className="field">
+      <div className={`field ${highlightClass}`}>
         <label>{label}</label>
 
         <textarea
@@ -38,16 +46,14 @@ function FormField({ label, name, type }) {
         : ["Low", "Medium", "High", "Urgent"];
 
     return (
-      <div className="field">
+      <div className={`field ${highlightClass}`}>
         <label>{label}</label>
 
         <select
           value={complaint[name] || ""}
           onChange={handleChange}
         >
-          <option value="">
-            Select...
-          </option>
+          <option value="">Select...</option>
 
           {options.map((option) => (
             <option key={option} value={option}>
@@ -60,7 +66,7 @@ function FormField({ label, name, type }) {
   }
 
   return (
-    <div className="field">
+    <div className={`field ${highlightClass}`}>
       <label>{label}</label>
 
       <input

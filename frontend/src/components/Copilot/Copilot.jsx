@@ -14,6 +14,8 @@ function Copilot() {
     "Upload a complaint to begin AI extraction."
   );
 
+  const [showProgress, setShowProgress] = useState(false);
+
   return (
     <div className="copilot">
       <div className="copilot-header">
@@ -25,12 +27,15 @@ function Copilot() {
       <UploadBox
         setProgress={setProgress}
         setMessage={setMessage}
+        setShowProgress={setShowProgress}
       />
 
-      <ProgressSection
-        progress={progress}
-        message={message}
-      />
+      {showProgress && (
+        <ProgressSection
+          progress={progress}
+          message={message}
+        />
+      )}
 
       <AIMessage />
 

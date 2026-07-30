@@ -4,9 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setComplaintFromAI } from "../../redux/complaintSlice";
 
-
-
-function UploadBox({ setProgress, setMessage }) {
+function UploadBox({ setProgress, setMessage, setShowProgress }) {
   const dispatch = useDispatch();
 
   const fileInputRef = useRef(null);
@@ -18,53 +16,65 @@ function UploadBox({ setProgress, setMessage }) {
   };
 
   const handleUpload = async (event) => {
-  const file = event.target.files[0];
+    const file = event.target.files[0];
 
-  if (!file) {
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("file", file);
-
-  let currentProgress = 0;
-
-  const interval = setInterval(() => {
-    currentProgress += 5;
-
-    if (currentProgress <= 90) {
-      setProgress(currentProgress);
+    if (!file) {
+      return;
     }
-  }, 300);
 
-  try {
-    setMessage("Extracting complaint...");
-
-    const response = await axios.post(
-      "http://127.0.0.1:8000/ai/extract-document",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    clearInterval(interval);
-
-    dispatch(setComplaintFromAI(response.data));
-
-    setProgress(100);
-    setMessage("Extraction completed successfully!");
-  } catch (error) {
-    clearInterval(interval);
-
+    setShowProgress(true);
     setProgress(0);
-    setMessage("Extraction failed.");
 
-    console.error(error);
-  }
-};
+    const formData = new FormData();
+    formData.append("file", file);
+
+    let currentProgress = 0;
+
+    const interval = setInterval(() => {
+      currentProgress += 5;
+
+      if (currentProgress <= 90) {
+        setProgress(currentProgress);
+      }
+    }, 300);
+
+    try {
+      setMessage("Extracting complaint...");
+
+      const response = await axios.post(
+        "http://127.0.0.1:8000/ai/extract-document",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      clearInterval(interval);
+
+      dispatch(setComplaintFromAI(response.data));
+
+      setProgress(100);
+      setMessage("Extraction completed successfully!");
+
+      setTimeout(() => {
+        setShowProgress(false);
+        setProgress(0);
+      }, 1500);
+    } catch (error) {
+      clearInterval(interval);
+
+      setMessage("Extraction failed.");
+
+      setTimeout(() => {
+        setShowProgress(false);
+        setProgress(0);
+      }, 1500);
+
+      console.error(error);
+    }
+  };
 
   const handleTextSubmit = async () => {
     if (!text.trim()) {
@@ -73,6 +83,10 @@ function UploadBox({ setProgress, setMessage }) {
     }
 
     try {
+      setShowProgress(true);
+      setProgress(30);
+      setMessage("Processing text...");
+
       const response = await axios.post(
         "http://127.0.0.1:8000/ai/log-complaint",
         {
@@ -82,13 +96,24 @@ function UploadBox({ setProgress, setMessage }) {
 
       dispatch(setComplaintFromAI(response.data));
 
+      setProgress(100);
+      setMessage("Complaint extracted successfully!");
+
       setText("");
 
-      alert("Complaint extracted successfully!");
+      setTimeout(() => {
+        setShowProgress(false);
+        setProgress(0);
+      }, 1500);
     } catch (error) {
       console.error(error);
 
-      alert("Failed to process complaint.");
+      setMessage("Failed to process complaint.");
+
+      setTimeout(() => {
+        setShowProgress(false);
+        setProgress(0);
+      }, 1500);
     }
   };
 
