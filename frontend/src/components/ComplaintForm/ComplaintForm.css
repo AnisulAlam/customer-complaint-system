@@ -1,0 +1,126 @@
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.form-header h2{
+    font-size:28px;
+    margin-bottom:4px;
+}
+
+.form-header p{
+    color:#777;
+}
+
+.badge{
+    background:#fff6d8;
+    color:#b7791f;
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.section{
+    margin-bottom:28px;
+}
+
+.section h4{
+    color:#666;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    margin-bottom:6px;
+    font-weight:600;
+    font-size:14px;
+}
+
+.field input,
+.field select,
+.textarea-wrapper textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #d8d8d8;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    background:#fafafa;
+}
+
+.textarea-wrapper{
+
+    margin-top:18px;
+}
+
+.textarea-wrapper label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+}
+
+.textarea-wrapper textarea{
+
+    height:120px;
+
+    resize:none;
+}
+
+.button-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:30px;
+}
+
+.primary-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 28px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+.secondary-btn{
+
+    background:white;
+
+    border:1px solid #ddd;
+
+    padding:12px 28px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
