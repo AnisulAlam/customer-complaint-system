@@ -1,5 +1,4 @@
 # AI-Powered Customer Complaint Management System
-![alt text](image.png)   ![alt text](image-1.png)
 
 An AI-powered customer complaint management system designed for pharmaceutical companies to automate complaint intake, extraction, risk assessment, and recommendation generation.
 
