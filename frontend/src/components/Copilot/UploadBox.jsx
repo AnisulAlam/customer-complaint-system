@@ -4,6 +4,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setComplaintFromAI } from "../../redux/complaintSlice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function UploadBox({ setProgress, setMessage, setShowProgress }) {
   const dispatch = useDispatch();
 
@@ -42,7 +44,7 @@ function UploadBox({ setProgress, setMessage, setShowProgress }) {
       setMessage("Extracting complaint...");
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/ai/extract-document",
+        `${API_URL}/ai/extract-document`,
         formData,
         {
           headers: {
@@ -88,7 +90,7 @@ function UploadBox({ setProgress, setMessage, setShowProgress }) {
       setMessage("Processing text...");
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/ai/log-complaint",
+        `${API_URL}/ai/log-complaint`,
         {
           complaint_text: text,
         }

@@ -66,7 +66,7 @@ function ChatBox() {
 
       if (isEditCommand) {
         response = await axios.post(
-          "http://127.0.0.1:8000/ai/edit-complaint",
+          `${API_URL}/ai/edit-complaint`,
           {
             command: message,
             complaint_data: complaint,
@@ -94,7 +94,7 @@ function ChatBox() {
         aiText = "Complaint updated successfully.";
       } else {
         response = await axios.post(
-          "http://127.0.0.1:8000/ai/log-complaint",
+          `${API_URL}/ai/log-complaint`,
           {
             complaint_text: message,
           }
