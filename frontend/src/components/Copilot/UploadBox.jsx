@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setComplaintFromAI } from "../../redux/complaintSlice";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://customer-complaint-backend.onrender.com";
 
 function UploadBox({ setProgress, setMessage, setShowProgress }) {
   const dispatch = useDispatch();
